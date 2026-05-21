@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MSBTE Management Automated MCQ Engine (315301)</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .custom-scroll::-webkit-scrollbar { width: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: #f1f5f9; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .custom-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col items-center p-4">
+
+    <header class="w-full max-w-2xl bg-white border border-slate-200 rounded-xl p-4 mb-4 shadow-xs text-center">
+        <h1 class="text-base font-bold text-slate-900 tracking-tight">MSBTE Management MCQ Engine (315301)</h1>
+        <p class="text-xs text-slate-500 font-medium mt-0.5">Syllabus-Wide Level-Wise Question Generator</p>
+    </header>
+
+    <div class="w-full max-w-2xl bg-white border border-slate-200 rounded-xl p-4 mb-4 shadow-xs">
+        <div class="space-y-3">
+            <div>
+                <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Select Chapter Unit:</label>
+                <select id="mobileUnitOpt" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs outline-none">
+                    <option value="1">Unit 1: Introduction to Management</option>
+                    <option value="2">Unit 2: Product Operations & Project Management</option>
+                    <option value="3">Unit 3: Management Practices</option>
+                    <option value="4">Unit 4: Marketing Practices</option>
+                    <option value="5">Unit 5: Supply Chain & HR Management</option>
+                </select>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Complexity Level:</label>
+                    <select id="mobileLvlOpt" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs outline-none">
+                        <option value="easy">Easy Matrix</option>
+                        <option value="medium">Medium Framework</option>
+                        <option value="hard">Hard Assessment</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Target Volume Pool:</label>
+                    <select id="mobileCountOpt" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold text-indigo-600 outline-none">
+                        <option value="5">5 Sample Items</option>
+                        <option value="25">25 Core Questions</option>
+                        <option value="50" selected>50 Bulk Questions</option>
+                        <option value="100">100 Max Pool</option>
+                    </select>
+                </div>
+            </div>
+
+            <button onclick="generateMassPool()" class="w-full bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-bold text-xs uppercase py-2.5 rounded-lg transition-all cursor-pointer">
+                ⚡ Compile Dynamic Test Pool
+            </button>
+        </div>
+    </div>
+
+    <div class="w-full max-w-2xl bg-white border border-slate-200 rounded-xl shadow-xs overflow-hidden">
+        <div class="bg-slate-900 px-4 py-3 text-white flex justify-between items-center">
+            <h2 id="sheetTitle" class="text-xs font-bold truncate max-w-[70%]">Standby Terminal</h2>
+            <span id="sheetBadge" class="text-[9px] px-2 py-0.5 rounded font-bold uppercase bg-slate-800 text-slate-400 border border-slate-700">STANDBY</span>
+        </div>
+
+        <div id="sheetWorkspace" class="p-4 space-y-4 max-h-[400px] overflow-y-auto custom-scroll">
+            <p class="text-slate-400 text-xs text-center py-4 italic">Configure the parameters above and execute compilation to see your questions.</p>
+        </div>
+    </div>
+
+    <script>
+        const conceptMatrix = {
+            "1": {
+                "name": "Unit 1: Introduction to Management",
+                "pool": [
+                    ["Planning function", "setting clear corporate goals, predicting operational environments, and building future blueprints", "Organizing resource charts", "Staffing modular blocks", "Controlling variance parameters"],
+                    ["Organizing resources", "arranging physical equipment, managing financing models, and deploying structural manpower structures", "Planning analytical operations", "Controlling compliance tolerances", "Arbitrary supervisor rule of thumb"],
+                    ["Staffing pipelines", "recruiting skilled candidate profiles, tracking ideal job matching, and training personnel assets", "Directing line movements", "Organizing material fields", "Centralization balance bounds"],
+                    ["Directing parameters", "guiding, motivating, leading, and supervising manual assembly floor workforce behaviors", "Planning future forecasts", "Controlling process margins", "Inventory procurement sourcing"],
+                    ["Controlling functions", "monitoring production output performance metrics and initiating rapid corrective adjustments", "Organizing localized nodes", "Leading institutional long term visions", "Sourcing material logistics contracts"],
+                    ["Chanakya Arthashastra model", "executing rigorous market intelligence collection and mapping industry competitive analysis", "human resource diversity planning", "inventory logistics warehouse layouts", "financial ledger accounting balance sheets"],
+                    ["Mahabharata management lessons", "Karma Yoga duty tracking tracking frameworks combined with clear mentorship criteria", "unauthorized labor strikes", "extreme corporate individualism", "planned industrial process obsolescence"],
+                    ["Ramayana leadership behaviors", "fostering deep institutional trust, strategic role delegation, and clear corporate group cultures", "dictatorial highly centralized power", "rigid unyielding scalar boundaries", "coercive monetary punishments"],
+                    ["Ashta Pradhan governance", "Chhatrapati Shivaji Maharaj administrative council implementing decentralized resource frameworks", "Henri Fayol absolute centralization laws", "F.W. Taylor rule of thumb workflows", "bureaucratic custom adjustments"],
+                    ["Mental Revolution principle", "F.W. Taylor model demanding complete cognitive transformation into mutual manager-worker harmony", "unilateral union strikes", "planned process obsolescence loops", "scalar chain processing delays"],
+                    ["Science, Not Rule of Thumb", "substituting archaic custom-guess processing patterns with precise cause-and-effect scientific tracking", "managerial baseline gut instincts", "arbitrary supervisor adjustments", "localized workflow network isolation"],
+                    ["Unity of Command rule", "Henri Fayol law stating that an operational asset takes instructions from exactly one direct boss", "Unity of Direction boundaries", "Scalar Chain pipelines", "Functional Division of labor lines"],
+                    ["Unity of Direction focus", "ensuring all workforce modules operate unitedly under one shared target corporate vision roadmap", "Absolute centralization bounds", "Tenure validation limits", "Esprit de corps team values"],
+                    ["Equity standards", "maintaining completely fair, non-discriminatory, and respectful interactions with all technical personnel", "Scalar chain execution rules", "Remuneration payment adjustments", "Centralization metrics"],
+                    ["Stability of Personnel Tenure", "minimizing employee turnover cycles by providing clear job protection and safety parameters", "Initiative bonus structures", "Workspace order guidelines", "Division of structural labor"]
+                ]
+            },
+            "2": {
+                "name": "Unit 2: Product Operations & Project Management",
+                "pool": [
+                    ["Idea Generation loops", "the preliminary ideation cataloging portal for collecting alternative raw design concepts", "Idea Screening filters", "Business Feasibility analysis", "Market Commercialization tracks"],
+                    ["Idea Screening routines", "evaluating early prototype options for legal feasibility, financial profit, and goal alignment", "Concept Validation testing", "Physical Product prototyping", "Syllabus market drop-offs"],
+                    ["Business Analysis phase", "estimating production scaling financial budgets, customer price elasticities, and profit lifecycles", "Raw idea collection arrays", "Prototype component manufacturing", "Continuous maintenance metrics"],
+                    ["Product Development tier", "building physical operational prototypes and executing precise environmental usability testing", "Screening concept parameters", "Target validation analysis", "Global market rollouts"],
+                    ["Test Marketing launches", "deploying limited product batches inside specialized trial tracks to monitor real user feedback", "Commercialization mass distribution", "Idea generation cycles", "Feasibility cash flow estimation"],
+                    ["Commercialization rollout", "executing full-scale factory output distribution across nationwide supply node links", "Prototype asset testing", "Screening design properties", "Syllabus tracking matrices"],
+                    ["Black Hat evaluation", "Edward de Bono thinking tool engineered for isolating potential strategic risks, process hazards, and systematic flaws", "Red Hat feeling parameters", "Yellow Hat target benefit grids", "Green Hat creativity loops"],
+                    ["White Hat data tracking", "Edward de Bono thinking tool engineered for focusing exclusively on neutral data metrics and factual values", "Blue Hat control loops", "Red Hat emotional insights", "Green Hat lateral models"],
+                    ["Green Hat innovation", "Edward de Bono thinking tool engineered for inspiring unconventional design combinations and lateral ideation", "Black Hat risk analysis", "White Hat factual statistics", "Yellow Hat optimistic metrics"],
+                    ["Yellow Hat optimization", "Edward de Bono thinking tool engineered for analyzing value elements, positive outcomes, and return models", "Black Hat hazard tracking", "Red Hat immediate feelings", "Blue Hat routing processes"],
+                    ["Morphological Matrix Analysis", "deconstructing a technical challenge into independent system vectors to study cross-combination designs", "Unstructured focus groups", "Reverse brainwriting streams", "SCAMPER text checklists"],
+                    ["PERT estimation logic", "probabilistic network analysis utilizing optimistic, most likely, and pessimistic milestone targets", "deterministic single-point models", "Gantt spreadsheet bar layouts", "parametric historical databases"],
+                    ["Critical Path Method (CPM)", "deterministic task sequence mapping tracking the longest dependent processing timelines", "probabilistic research algorithms", "Three-point estimation matrices", "Cradle-to-grave eco assessments"],
+                    ["Scope Management controls", "defining explicit project deliverables and preventing unmonitored baseline scope creep variations", "Cost overrun constraints", "Sourcing procurement protocols", "Stakeholder resolution matrix"],
+                    ["Kotter 8-Step change model", "establishing standard urgency matrices to smoothly carry out critical corporate restructurings", "PERT milestone scheduling", "Six Sigma variance boundaries", "Lean processing mudas"]
+                ]
+            },
+            "3": {
+                "name": "Unit 3: Management Practices",
+                "pool": [
+                    ["Set in Order (Seiton)", "arranging all target assembly elements into cleanly marked and highly accessible storage points to prevent motion waste", "Red-tagging unused waste", "Daily workspace polish", "Automating compliance lines"],
+                    ["Sort (Seiri) methods", "isolating and eliminating non-essential equipment parameters using tools like Red-Tagging evaluations", "Set in order marked points", "Shine mechanical cleanups", "Sustain institutional culture"],
+                    ["Pareto 80/20 rule", "quality analysis framework highlighting that 80% of operational bugs stem from 20% of critical causes", "Six Sigma statistical limits", "Ishikawa layout parameters", "Control chart dispersion boundaries"],
+                    ["Fishbone Cause-Effect Diagram", "visual layout utility used to systematically categorize and isolate the root sources of process variance", "Control tracking charts", "Data histogram plots", "Scatter graph distributions"],
+                    ["Control Charts", "plotting system parameter stability over chronological lines to identify anomalies and out-of-bounds metrics", "System flowcharts", "Pareto priority rankings", "Decentralized scorecards"],
+                    ["Six Sigma variance goals", "maintaining production accuracy thresholds to ensure errors do not exceed 3.4 defects per million opportunities", "6200 errors per million", "230 errors per million", "absolute zero deviation lines"],
+                    ["ISO 9001 standard", "the benchmark framework engineered for validating a corporate Quality Management System (QMS)", "ISO 14001 eco criteria", "ISO 45001 safety guidelines", "ISO 50001 energy tracking"],
+                    ["ISO 14001 guidelines", "the global standard blueprint tracking structural compliance within an Environmental Management System (EMS)", "ISO 9001 quality metrics", "OSHA industrial safety rules", "Centralized financial ledger logs"],
+                    ["OSHA regulations", "enforcing strict operational security protocols to minimize hazards and protect frontline asset safety", "TQM process variation bounds", "Market demand indicators", "Procurement supply cash pools"],
+                    ["Enterprise Resource Planning (ERP)", "centralized multi-module database platform tracking finance, HR, sourcing, and distribution pipelines in real-time", "Decentralized independent data logs", "Autocratic workflow modules", "Extended manufacturer liability loops"],
+                    ["Reliability parameters", "the quality dimension measuring consistent, accurate, and dependable performance across service cycles", "Tangibles asset layout styles", "Customized user empathy options", "Professional worker credentials"],
+                    ["Responsiveness parameters", "the quality dimension measuring willingness to provide rapid feedback and timely customer solutions", "Worker skill certifications", "Physical equipment styling parameters", "Output error consistency records"],
+                    ["Servicescape framework", "the ambient lighting, spatial configurations, and structural setting where service output is delivered", "Digital simulation sandboxes", "Extended supply node routing", "Cradle-to-Cradle engineering plans"],
+                    ["Overproduction waste", "Lean Manufacturing waste class defined as processing inventory before or beyond immediate consumer request limits", "Frontline motion friction", "Inventory buffer processing delays", "Transportation layout latency loops"],
+                    ["Kaizen continuous adjustment", "Japanese paradigm targeting constant, minor, and long-term quality adjustments at every level of production", "Macro strategic corporate mergers", "Top-down executive mandates", "Deterministic critical sequence paths"]
+                ]
+            },
+            "4": {
+                "name": "Unit 4: Marketing Practices",
+                "pool": [
+                    ["Marketing Need", "a physiological core prerequisite vital for baseline biological survival, completely free of cultural bias", "Individual Want profile", "Economic Backed Demand matrix", "Product Value Proposition"],
+                    ["Marketing Want", "a culturally and socially conditioned desire for a specific brand choice beyond base biological survival requirements", "Physiological absolute need", "Funded Market Demand vector", "Linear lifecycle assessment"],
+                    ["Marketing Demand", "a specific product choice desire that is fully supported by immediate financial purchasing capacity and willingness to pay", "Biological survival prerequisite", "Unfunded cultural choice preference", "Servicescape ambient physical asset"],
+                    ["Product P-element", "managing configuration aesthetics, physical functionalities, size parameters, trademark labels, and warranty options", "Price elasticity evaluation profiles", "Logistical delivery channel footprints", "Broadcast advertising media plans"],
+                    ["Price P-element", "structuring customer cost models, financing alternatives, discounting margins, and promotional bundling limits", "Tangible paper packaging styles", "Vendor procurement supply pipelines", "Frontline staff professionalism profiles"],
+                    ["Place P-element", "engineering structural supply distribution networks to guarantee seamless product access for target markets", "Psychological price thresholding lines", "Broadcast advertising media investments", "Staff credentials verification processes"],
+                    ["Process P-element", "the precise backend steps, transaction tracking rules, and operational pathways through which services run", "Tangible business card styles", "Price point threshold modifications", "Mass media publicity campaigns"],
+                    ["Physical Evidence", "tangible proof of quality parameters like facility architecture, layout design, ambient style, and documentation cards", "Elastic channel discount variables", "Sourcing channel negotiation matrices", "Internal operator morale indices"],
+                    ["Customer Relationship Management (CRM)", "analytical software system used to track customer interaction milestones to optimize brand retention", "Decentralized layout tracking loops", "Linear material sourcing profiles", "Parametric milestone tracking formulas"],
+                    ["Traditional Mass Marketing", "offline outbound channels utilizing newspaper column printing, roadside billboards, and analog television spots", "Search engine optimization analytics", "Social platform video loops", "Targeted electronic mail workflows"],
+                    ["Digital Target Marketing", "highly optimized interactive online channels using SEO, social network campaigns, and real-time click metrics", "Mass paper leaflet distribution", "Static outbound canvas signs", "Analog radio network spots"],
+                    ["Event Planning frameworks", "outlining explicit event goals, resource constraints, chronological scheduling, and logistical safety maps", "Post-event data review processing", "On-site vendor dispute settlements", "Brand promotion contract auditing"],
+                    ["Public Relations (PR) Crisis", "sudden negative publicity vectors or scandals that threaten institutional trust and corporate reputation", "Standard logistics route disruptions", "Localized computing firmware outrages", "Assembly floor material supply delays"],
+                    ["Pre-Crisis planning", "drafting adaptive corporate mitigation manuals and running rigorous emergency simulation drills for staff", "Immediate court litigation measures", "Post-event metrics calculation cards", "Factory material inventory recall actions"],
+                    ["CRM Loyalty incentives", "offering personalized benefits and milestones to transition standard consumers into repeat
